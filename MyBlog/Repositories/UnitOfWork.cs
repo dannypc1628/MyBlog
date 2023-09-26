@@ -7,7 +7,7 @@ namespace MyBlog.Repositories
     {
         public DbContext Context { get; set; }
 
-        public UnitOfWork(MyBlogContext dbContext)
+        public UnitOfWork(DbContext dbContext)
         {
             Context = dbContext;
         }

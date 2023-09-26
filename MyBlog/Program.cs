@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyBlog.Models;
+using MyBlog.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,12 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddDbContext<MyBlogContext>(options =>
               options.UseSqlServer(builder.Configuration.GetConnectionString("MyBlogConnection")));
+
+builder.Services.AddScoped<DbContext, MyBlogContext>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IPostRepository, PostRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IOptionRepository, OptionRepository>();
 
 
 var app = builder.Build();
