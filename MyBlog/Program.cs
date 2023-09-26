@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using MyBlog.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,10 @@ if (builder.Environment.IsDevelopment())
 {
     mvcBuilder.AddRazorRuntimeCompilation();
 }
+
+builder.Services.AddDbContext<MyBlogContext>(options =>
+              options.UseSqlServer(builder.Configuration.GetConnectionString("MyBlogConnection")));
+
 
 var app = builder.Build();
 
