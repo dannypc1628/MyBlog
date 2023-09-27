@@ -9,6 +9,8 @@ public partial class Post
 {
     public int Id { get; set; }
 
+    public int ParentId { get; set; }
+
     public int UserId { get; set; }
 
     public DateTime PublishDate { get; set; }

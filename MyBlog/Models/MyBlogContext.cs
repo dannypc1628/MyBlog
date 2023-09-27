@@ -63,6 +63,7 @@ public partial class MyBlogContext : DbContext
                 .IsRequired()
                 .HasMaxLength(200)
                 .HasColumnName("ogTitle");
+            entity.Property(e => e.ParentId).HasColumnName("parentId");
             entity.Property(e => e.Path)
                 .IsRequired()
                 .HasMaxLength(200)
