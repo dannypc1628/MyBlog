@@ -1,0 +1,73 @@
+﻿@model MyBlog.Models.Post
+
+@{
+    ViewData["Title"] = "CreatePost";
+}
+
+<h1>CreatePost</h1>
+
+<h4>Post</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreatePost">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FilteredContent" class="control-label"></label>
+                <input asp-for="FilteredContent" class="form-control" />
+                <span asp-validation-for="FilteredContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Path" class="control-label"></label>
+                <input asp-for="Path" class="form-control" />
+                <span asp-validation-for="Path" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OgTitle" class="control-label"></label>
+                <input asp-for="OgTitle" class="form-control" />
+                <span asp-validation-for="OgTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OgDescription" class="control-label"></label>
+                <input asp-for="OgDescription" class="form-control" />
+                <span asp-validation-for="OgDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OgKeywords" class="control-label"></label>
+                <input asp-for="OgKeywords" class="form-control" />
+                <span asp-validation-for="OgKeywords" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OgImage" class="control-label"></label>
+                <input asp-for="OgImage" class="form-control" />
+                <span asp-validation-for="OgImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-controller="Home">回到首頁</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
