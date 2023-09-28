@@ -5,7 +5,7 @@ using MyBlog.Repositories;
 
 namespace MyBlog.Services
 {
-    public class PostService
+    public class PostService : IPostService
     {
         private readonly IPostRepository _postRepository;
 

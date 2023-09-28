@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyBlog.Models;
 using MyBlog.Repositories;
+using MyBlog.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IOptionRepository, OptionRepository>();
+
+builder.Services.AddTransient<IPostService, PostService>();
 
 
 var app = builder.Build();
