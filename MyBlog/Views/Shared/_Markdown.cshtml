@@ -1,0 +1,15 @@
+﻿
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+<script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("FilteredContent") });
+    var converter = new showdown.Converter({ simpleLineBreaks: true });
+
+    function toHTML() {
+        var markdown = simplemde.value();
+        var html = converter.makeHtml(markdown);
+
+        $('#Content').val(html);
+    }
+</script>
