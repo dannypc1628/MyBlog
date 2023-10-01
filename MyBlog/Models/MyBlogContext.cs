@@ -40,9 +40,7 @@ public partial class MyBlogContext : DbContext
         {
             entity.ToTable("post");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Content)
                 .IsRequired()
                 .HasColumnName("content");

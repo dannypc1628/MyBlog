@@ -27,6 +27,8 @@ namespace MyBlog.Services
 
         public async Task CreateAsync(Post post)
         {
+            前處理(post);
+            
             post.UserId = 1;
             post.PublishDate = DateTime.Now;
             post.UpdateDate = DateTime.Now;
@@ -34,19 +36,21 @@ namespace MyBlog.Services
             _postRepository.UnitOfWork.Save();
         }
 
-        public async Task Update(Post post)
+        public async Task UpdateAsync(Post post)
         {
+            前處理(post);
             var oldPost = await GetAsync(post.Id);
             if (oldPost is null)
             {
                 return;
             }
-
             var historyPost = oldPost.Clone();
             historyPost.ParentId = oldPost.Id;
             historyPost.Id = 0;
             historyPost.Status = PostStatus.編輯紀錄.ToString();
             await _postRepository.CreateAsync(historyPost);
+            _postRepository.UnitOfWork.Save();
+
 
             oldPost.Title = post.Title;
             oldPost.Content = post.Content;
@@ -70,6 +74,28 @@ namespace MyBlog.Services
 
             post.Status = PostStatus.已刪除.ToString();
             _postRepository.UnitOfWork.Save();
+        }
+
+        public void 前處理(Post post)
+        {
+            post.Title = 字串前處理(post.Title );
+            post.Content = 字串前處理(post.Content);
+            post.FilteredContent = 字串前處理(post.FilteredContent);
+            post.Path = 字串前處理(post.Path);
+            post.OgTitle = 字串前處理(post.OgTitle);
+            post.OgDescription = 字串前處理(post.OgDescription);
+            post.OgKeywords = 字串前處理(post.OgKeywords);
+            post.OgImage = 字串前處理(post.OgImage);
+        }
+
+        public string 字串前處理(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return string.Empty;
+            }
+
+            return str.Trim();
         }
     }
 }

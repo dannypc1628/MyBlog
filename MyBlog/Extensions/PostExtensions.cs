@@ -13,6 +13,7 @@ namespace MyBlog.Extensions
             newPost.FilteredContent = post.FilteredContent;
             newPost.UpdateDate = post.UpdateDate;
             newPost.PublishDate = post.PublishDate;
+            newPost.Path = post.Path;
             newPost.Status = post.Status;
             newPost.OgDescription = post.OgDescription;
             newPost.OgTitle = post.OgTitle;

@@ -10,7 +10,7 @@ namespace MyBlog.Services
 
         Task CreateAsync(Post post);
 
-        Task Update(Post post);
+        Task UpdateAsync(Post post);
 
         void Delete(int id);
     }
