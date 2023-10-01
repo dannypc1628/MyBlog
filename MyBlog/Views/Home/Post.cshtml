@@ -1,0 +1,18 @@
+﻿@model MyBlog.Models.Post
+
+@{
+    ViewData["Title"] = "Post";
+}
+
+<div class="card mt-3" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            @Model.PublishDate.ToShortDateString()
+        </h6>
+        <p class="card-text">
+            @Html.Raw(Model.Content)
+        </p>
+        <a asp-action="UpdatePost" asp-controller="Admin" asp-route-id="@Model.Id">編輯</a>
+    </div>
+</div>

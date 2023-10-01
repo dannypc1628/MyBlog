@@ -23,9 +23,10 @@ namespace MyBlog.Controllers
             return View(posts);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Post(int id)
         {
-            return View();
+            var post = await _postService.GetAsync(id);
+            return View(post);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
