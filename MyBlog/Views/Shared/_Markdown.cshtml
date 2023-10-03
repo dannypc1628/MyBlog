@@ -13,3 +13,51 @@
         $('#Content').val(html);
     }
 </script>
+
+<script>
+    let items = document.getElementsByClassName('CodeMirror-scroll');
+    let dropArea = items[0];
+
+    dropArea.addEventListener('dragover', (event) => {
+        event.preventDefault();
+
+    });
+
+    dropArea.addEventListener('drop', (event) => {
+        event.preventDefault();
+
+        const files = event.dataTransfer.files;
+        upladFiles(files);
+    });
+
+    function upladFiles(files) {
+        const formData = new FormData();
+
+        for (const file of files) {
+            if (file.type.startsWith('image')) {
+                formData.append('images', file);
+            }
+        }
+
+        fetch('/Admin/UploadImages', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                insertImages(data);
+            })
+            .catch(error => { console.error(error); });
+    }
+
+    function insertImages(data) {
+        data.forEach(item => { insertImage(item); });
+    }
+
+    function insertImage(data) {
+        var pos = simplemde.codemirror.getCursor();
+        simplemde.codemirror.setSelection(pos, pos);
+        simplemde.codemirror.replaceSelection(`![dannyliu](${data})`);
+    }
+</script>

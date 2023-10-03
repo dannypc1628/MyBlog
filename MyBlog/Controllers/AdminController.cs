@@ -47,28 +47,49 @@ namespace MyBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadImage(IFormFile image)
         {
-            if (image != null && image.Length > 0)
-            {
-                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "image");
-                if (!Directory.Exists(imagePath))
-                {
-                    Directory.CreateDirectory(imagePath);
-                }
-
-                var extenrsion = Path.GetExtension(image.FileName);
-                var fileName = $"{Guid.NewGuid()}{extenrsion}";
-
-                using (var stream = System.IO.File.Create($"{imagePath}/{fileName}"))
-                {
-                    await image.CopyToAsync(stream);
-                }
-
-                var webPath = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/image/{fileName}";
-
-                ModelState.AddModelError("", webPath);
-            }
+            var result = await UploadAsync(image);
+            ModelState.AddModelError("", result);
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadImages(IFormFile[] images)
+        {
+            var list = new List<string>();
+            foreach (var image in images)
+            {
+                var path = await UploadAsync(image);
+                list.Add(path);
+            }
+
+            return Json(list);
+        }
+
+        private async Task<string> UploadAsync(IFormFile image)
+        {
+            if (image == null || image.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "image");
+            if (!Directory.Exists(imagePath))
+            {
+                Directory.CreateDirectory(imagePath);
+            }
+
+            var extenrsion = Path.GetExtension(image.FileName);
+            var fileName = $"{Guid.NewGuid()}{extenrsion}";
+
+            using (var stream = System.IO.File.Create($"{imagePath}/{fileName}"))
+            {
+                await image.CopyToAsync(stream);
+            }
+
+            var webPath = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/image/{fileName}";
+
+            return webPath;
         }
     }
 }
