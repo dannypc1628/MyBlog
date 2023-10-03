@@ -2,5 +2,9 @@
   {
     "inputFile": "SCSS/test.scss",
     "outputFile": "wwwroot/css/test.css"
+  },
+  {
+    "inputFile": "Contents/Bootstrap/scss/bootstrap.scss",
+    "outputFile": "wwwroot/css/bootstrap.css"
   }
 ]
