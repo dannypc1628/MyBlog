@@ -1,14 +1,33 @@
 ﻿
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
 <script>
-    var simplemde = new SimpleMDE({ element: document.getElementById("FilteredContent") });
-    var converter = new showdown.Converter({ simpleLineBreaks: true });
+    var simplemde = new SimpleMDE({ element: document.getElementById("FilteredContent") ,
+        toolbar: [{
+            name: "bold",
+            action: SimpleMDE.toggleBold,
+            className: "fa fa-bold",
+            title: "Bold",
+        },
+            "|", // Separator,
+        {
+            name: "more",
+            action:  addMore ,
+            className: "fa fa-hand-o-right",
+            title: "more",
+        }
+        ]
+    });
+
+    function addMore(){
+        var pos = simplemde.codemirror.getCursor();
+        simplemde.codemirror.setSelection(pos, pos);
+        simplemde.codemirror.replaceSelection(`<!--more-->`);
+    }
 
     function toHTML() {
         var markdown = simplemde.value();
-        var html = converter.makeHtml(markdown);
+        var html = simplemde.options.previewRender(markdown);
 
         $('#Content').val(html);
     }
