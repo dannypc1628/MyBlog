@@ -7,13 +7,18 @@ namespace MyBlog.Controllers
     public class AdminController : Controller
     {
         private readonly IPostService _postService;
+        private readonly IOptionService _optionService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AdminController(IPostService postService, IWebHostEnvironment webHostEnvironment)
+        public AdminController(IPostService postService,
+            IOptionService optionService,
+            IWebHostEnvironment webHostEnvironment)
         {
             _postService = postService;
+            _optionService = optionService;
             _webHostEnvironment = webHostEnvironment;
         }
+
         public IActionResult CreatePost()
         {
             return View();
@@ -90,6 +95,51 @@ namespace MyBlog.Controllers
             var webPath = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/image/{fileName}";
 
             return webPath;
+        }
+
+        public IActionResult Options()
+        {
+            var options = _optionService.GetAll();
+            return View(options);
+        }
+
+        public IActionResult CreateOption()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOption(Option option)
+        {
+            await _optionService.CreateAsync(option);
+            return RedirectToAction("Options");
+        }
+
+        public async Task<IActionResult> UpdateOption(int id)
+        {
+            var option = await _optionService.GetAsync(id);
+            return View(option);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateOption(Option option)
+        {
+            await _optionService.UpdateAsync(option);
+            return RedirectToAction("Options");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteOption(int id)
+        {
+            var option = await _optionService.GetAsync(id);
+            return View(option);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteOptionConfirmed(int id)
+        {
+            await _optionService.RemoveAsync(id);
+            return RedirectToAction("Options");
         }
     }
 }
