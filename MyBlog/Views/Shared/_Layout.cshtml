@@ -1,9 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using MyBlog.Services;
+@inject IOptionService optionService;
+@{
+    var siteName = optionService.GetValue("siteName");
+}
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - 長庚的作業簿</title>
+    <title>@ViewData["Title"] - @siteName</title>
     <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MyBlog.styles.css" asp-append-version="true" />
@@ -12,21 +17,22 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-primary">
             <div class="container-fluid">
-                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">長庚的作業簿</a>
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">@siteName</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                         <a class="nav-link text-white"  asp-action="CreatePost" asp-controller="Admin">新增文章</a>
-                        <a class="nav-link text-white"  asp-controller="Admin" asp-action="UploadImage">圖片上傳</a>
+                        <a class="nav-link text-white" asp-controller="Admin" asp-action="UploadImage">圖片上傳</a>
+                        <a class="nav-link text-white" asp-controller="Admin" asp-action="Options">Options</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-        <h1 hidden>長庚的作業簿</h1>
+        <h1 hidden>@siteName</h1>
         <div class="row row-cols-1 row-cols-lg-2">
             <main role="main" class="col col-lg-9 pt-2 pb-2">
                 @RenderBody()
@@ -39,7 +45,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - 長庚的作業簿 
+            &copy; 2023 - @siteName 
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
