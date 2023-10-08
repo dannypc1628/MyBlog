@@ -28,7 +28,8 @@ namespace MyBlog.Services
         public async Task CreateAsync(Post post)
         {
             前處理(post);
-            
+
+            post.Id = GetNewId();
             post.UserId = 1;
             post.PublishDate = DateTime.Now;
             post.UpdateDate = DateTime.Now;
@@ -46,11 +47,10 @@ namespace MyBlog.Services
             }
             var historyPost = oldPost.Clone();
             historyPost.ParentId = oldPost.Id;
-            historyPost.Id = 0;
+            historyPost.Id = GetNewId();
             historyPost.Status = PostStatus.編輯紀錄.ToString();
             await _postRepository.CreateAsync(historyPost);
             _postRepository.UnitOfWork.Save();
-
 
             oldPost.Title = post.Title;
             oldPost.Content = post.Content;
@@ -64,7 +64,7 @@ namespace MyBlog.Services
             _postRepository.UnitOfWork.Save();
         }
 
-        public async void Delete(int id)
+        public async void DeleteAsync(int id)
         {
             var post = await GetAsync(id);
             if (post is null)
@@ -78,7 +78,7 @@ namespace MyBlog.Services
 
         public void 前處理(Post post)
         {
-            post.Title = 字串前處理(post.Title );
+            post.Title = 字串前處理(post.Title);
             post.Content = 字串前處理(post.Content);
             post.FilteredContent = 字串前處理(post.FilteredContent);
             post.Path = 字串前處理(post.Path);
@@ -96,6 +96,13 @@ namespace MyBlog.Services
             }
 
             return str.Trim();
+        }
+
+        private int GetNewId()
+        {
+            var post = _postRepository.GetAll().OrderByDescending(x => x.Id).FirstOrDefault() ?? new Post();
+
+            return post.Id + 1;
         }
     }
 }

@@ -12,6 +12,6 @@ namespace MyBlog.Services
 
         Task UpdateAsync(Post post);
 
-        void Delete(int id);
+        void DeleteAsync(int id);
     }
 }
