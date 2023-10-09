@@ -9,8 +9,8 @@
             newPost.Title = string.Empty;
             newPost.Content = string.Empty;
             newPost.FilteredContent = string.Empty;
-            //newPost.UpdateDate = post.UpdateDate;
-            //newPost.PublishDate = post.PublishDate;
+            newPost.UpdateDate = new DateTime();
+            newPost.PublishDate = new DateTime();
             newPost.Path = string.Empty;
             newPost.Status = string.Empty;
             newPost.OgDescription = string.Empty;

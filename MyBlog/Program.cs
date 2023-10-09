@@ -23,7 +23,7 @@ builder.Services.AddTransient<IOptionRepository, OptionRepository>();
 
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IOptionService, OptionService>();
-
+builder.Services.AddTransient<IImportService, ImportService>();
 
 var app = builder.Build();
 

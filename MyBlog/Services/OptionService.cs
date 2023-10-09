@@ -50,7 +50,7 @@ namespace MyBlog.Services
         {
             var option = GetByName(name);
 
-            return option?.Name ?? string.Empty;
+            return option?.Value ?? string.Empty;
         }
 
         public async Task UpdateAsync(Option newOption)

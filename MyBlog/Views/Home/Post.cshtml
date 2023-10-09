@@ -4,15 +4,20 @@
     ViewData["Title"] = "Post";
 }
 
-<div class="card mt-3" style="width: 18rem;">
+<div class="card mt-3">
     <div class="card-body">
-        <h5 class="card-title">@Model.Title</h5>
+        <h2 class="card-title">
+            <a asp-action="Post" asp-route-id="@Model.Id"
+               class="link-underline link-underline-opacity-0">@Model.Title</a>
+        </h2>
         <h6 class="card-subtitle mb-2 text-muted">
             @Model.PublishDate.ToShortDateString()
         </h6>
         <p class="card-text">
             @Html.Raw(Model.Content)
         </p>
-        <a asp-action="UpdatePost" asp-controller="Admin" asp-route-id="@Model.Id">編輯</a>
+        <div class="d-flex justify-content-between align-items-center">
+            <a asp-action="UpdatePost" asp-controller="Admin" asp-route-id="@Model.Id">編輯</a>
+        </div>
     </div>
 </div>
