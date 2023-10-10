@@ -99,6 +99,10 @@ public partial class MyBlogContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasColumnName("name");
+            entity.Property(e => e.Password)
+                .IsRequired()
+                .HasMaxLength(200)
+                .HasColumnName("password");
             entity.Property(e => e.Role).HasColumnName("role");
             entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
         });
