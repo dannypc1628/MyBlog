@@ -1,5 +1,4 @@
 ﻿using MyBlog.Repositories;
-using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyBlog.Models
@@ -13,9 +12,11 @@ namespace MyBlog.Models
         public string Email { get; set; } = string.Empty;
 
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; } = string.Empty;
 
         [Compare(nameof(Password))]
+        [DataType(DataType.Password)]
         public string PasswordCheck { get; set; } = string.Empty;
 
         [Required]

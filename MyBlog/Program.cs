@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyBlog.Models;
 using MyBlog.Repositories;
@@ -24,6 +26,12 @@ builder.Services.AddTransient<IOptionRepository, OptionRepository>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IOptionService, OptionService>();
 builder.Services.AddTransient<IImportService, ImportService>();
+builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
 
 var app = builder.Build();
 
@@ -40,6 +48,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
