@@ -31,7 +31,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie();
+    .AddCookie(x => x.LoginPath = "/Login/Login");
 
 var app = builder.Build();
 

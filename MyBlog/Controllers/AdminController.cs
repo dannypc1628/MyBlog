@@ -1,20 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MyBlog.Extensions;
 using MyBlog.Models;
 using MyBlog.Services;
 
 namespace MyBlog.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IPostService _postService;
+        private readonly IUserService _userService;
         private readonly IOptionService _optionService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public AdminController(IPostService postService,
             IOptionService optionService,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IUserService userService)
         {
             _postService = postService;
+            _userService = userService;
             _optionService = optionService;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -28,6 +34,20 @@ namespace MyBlog.Controllers
         public IActionResult CreatePost(Post post)
         {
             _postService.CreateAsync(post);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> UpdateUser()
+        {
+            var user = await _userService.GetAsync(User.GetUserId());
+            return View(user.ToUserUpdateViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateUser(UserUpdateViewModel user)
+        {
+            user.Id = User.GetUserId();
+            await _userService.UpdateAsync(user);
             return RedirectToAction("Index", "Home");
         }
 

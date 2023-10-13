@@ -1,32 +1,28 @@
-﻿@model MyBlog.Models.UserCreateViewModel
+﻿@model MyBlog.Models.UserUpdateViewModel
 
 @{
-    ViewData["Title"] = "CreateUser";
+    ViewData["Title"] = "UpdateUser";
 }
 
-<h1>CreateUser</h1>
+<h1>UpdateUser</h1>
 
 <h4>User</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateUser">
+        <form asp-action="UpdateUser">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+@*            <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PasswordCheck" class="control-label"></label>
-                <input asp-for="PasswordCheck" class="form-control" />
-                <span asp-validation-for="PasswordCheck" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -37,6 +33,11 @@
                 <input asp-for="DisplayId" class="form-control" />
                 <span asp-validation-for="DisplayId" class="text-danger"></span>
             </div>
+         @* <div class="form-group">
+                <label asp-for="Role" class="control-label"></label>
+                <input asp-for="Role" class="form-control" />
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
                 <input asp-for="Image" class="form-control" />
@@ -47,19 +48,14 @@
                 <input asp-for="About" class="form-control" />
                 <span asp-validation-for="About" class="text-danger"></span>
             </div>
-@*            <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <input asp-for="Role" class="form-control" />
-                <span asp-validation-for="Role" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Home">返回</a>
 </div>
 

@@ -26,11 +26,11 @@ namespace MyBlog.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserViewModel viewModel)
+        public async Task<IActionResult> CreateUser(UserCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var result = await _userService.InitCreateAsync(viewModel);
+                var result = await _userService.CreateAsync(viewModel);
                 if (result.IsSuccess)
                 {
                     return RedirectToAction("Login", "Login");

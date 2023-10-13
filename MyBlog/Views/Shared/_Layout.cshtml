@@ -18,17 +18,21 @@
         <nav class="navbar navbar-expand-lg bg-primary">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">@siteName</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link text-white"  asp-action="CreatePost" asp-controller="Admin">新增文章</a>
-                        <a class="nav-link text-white" asp-controller="Admin" asp-action="UploadImage">圖片上傳</a>
-                        <a class="nav-link text-white" asp-controller="Admin" asp-action="Options">Options</a>
-                        <a class="nav-link text-white" asp-controller="Login" asp-action="Logout">登出</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-link text-white" asp-action="CreatePost" asp-controller="Admin">新增文章</a>
+                            <a class="nav-link text-white" asp-controller="Admin" asp-action="UploadImage">圖片上傳</a>
+                            <a class="nav-link text-white" asp-controller="Admin" asp-action="UpdateUser">個人資料編輯</a>
+                            <a class="nav-link text-white" asp-controller="Admin" asp-action="Options">Options</a>
+                            <a class="nav-link text-white" asp-controller="Login" asp-action="Logout">登出</a>
+                        </div>
                     </div>
-                </div>
+                }
             </div>
         </nav>
     </header>
