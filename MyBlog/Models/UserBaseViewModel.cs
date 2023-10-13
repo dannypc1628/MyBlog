@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyBlog.Models
 {
-    public class UserViewModel : IValidatableObject
+    public class UserBaseViewModel : IValidatableObject
     {
         public int Id { get; set; }
 
@@ -12,19 +12,13 @@ namespace MyBlog.Models
         public string Email { get; set; } = string.Empty;
 
         [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; } = string.Empty;
-
-        [Compare(nameof(Password))]
-        [DataType(DataType.Password)]
-        public string PasswordCheck { get; set; } = string.Empty;
-
-        [Required]
         public string Name { get; set; } = string.Empty;
 
         [Required]
         public string DisplayId { get; set; } = string.Empty;
 
+        public string? Image { get; set; } 
+        public string? About { get; set; } 
         public int Role { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -46,21 +40,6 @@ namespace MyBlog.Models
             {
                 yield return new ValidationResult("此 DisplayId 已存在", new[] { nameof(DisplayId) });
             }
-        }
-
-        public User ToUser()
-        {
-            var user = new User();
-            user.Id = Id;
-            user.Name = Name;
-            user.Email = Email;
-            user.Password = Password;
-            user.DisplayId = DisplayId;
-            user.Role = Role;
-            user.CreateDate = new DateTime();
-            user.UpdateDate = user.CreateDate;
-
-            return user;
         }
     }
 }

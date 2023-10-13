@@ -86,6 +86,9 @@ public partial class MyBlogContext : DbContext
             entity.ToTable("user");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.About)
+                .IsRequired()
+                .HasColumnName("about");
             entity.Property(e => e.CreateDate).HasColumnName("createDate");
             entity.Property(e => e.DisplayId)
                 .IsRequired()
@@ -95,6 +98,10 @@ public partial class MyBlogContext : DbContext
                 .IsRequired()
                 .HasMaxLength(100)
                 .HasColumnName("email");
+            entity.Property(e => e.Image)
+                .IsRequired()
+                .HasMaxLength(200)
+                .HasColumnName("image");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(50)

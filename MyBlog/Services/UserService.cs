@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using MyBlog.Enums;
+using MyBlog.Extensions;
 using MyBlog.Models;
 using MyBlog.Repositories;
 using System.Security.Claims;
@@ -35,13 +36,13 @@ namespace MyBlog.Services
             return new ResultViewModel(false, "帳號或密碼錯誤");
         }
 
-        public async Task<ResultViewModel> InitCreateAsync(UserViewModel viewModel)
+        public async Task<ResultViewModel> CreateAsync(UserCreateViewModel viewModel)
         {
             int count = GetCount();
             if (count == 0)
             {
                 viewModel.Role = (int)RoleStatus.管理員;
-                await CreateAsync(viewModel);
+                await DoCreateAsync(viewModel);
                 return new ResultViewModel(true, "註冊成功");
             }
 
@@ -55,11 +56,10 @@ namespace MyBlog.Services
             return user;
         }
 
-
-
-        public async Task CreateAsync(UserViewModel viewModel)
+        private async Task DoCreateAsync(UserCreateViewModel viewModel)
         {
             var user = viewModel.ToUser();
+            user.Password = viewModel.Password;
             HashUserPassword(user);
             user.Role = viewModel.Role;
             user.CreateDate = DateTime.Now;
@@ -68,7 +68,7 @@ namespace MyBlog.Services
             _userRepository.UnitOfWork.Save();
         }
 
-        public async Task UpdateAsync(UserViewModel viewModel)
+        public async Task UpdateAsync(UserBaseViewModel viewModel)
         {
             var user = await _userRepository.GetAsync(x => x.Id == viewModel.Id);
             if (user is null)
@@ -78,9 +78,9 @@ namespace MyBlog.Services
 
             user.Name = viewModel.Name;
             user.Email = viewModel.Email;
-            user.Password = viewModel.Password;
             user.DisplayId = viewModel.DisplayId;
-            HashUserPassword(user);
+            user.Image = viewModel.Image;
+            user.About = viewModel.About;
             user.UpdateDate = DateTime.Now;
             _userRepository.UnitOfWork.Save();
         }

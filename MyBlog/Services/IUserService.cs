@@ -10,10 +10,8 @@ namespace MyBlog.Services
 
         public Task<ResultViewModel> LoginAsync(LoginViewModel viewModel);
 
-        public Task<ResultViewModel> InitCreateAsync(UserViewModel viewModel);
+        public Task<ResultViewModel> CreateAsync(UserCreateViewModel viewModel);
 
-        public Task CreateAsync(UserViewModel viewModel);
-
-        public Task UpdateAsync(UserViewModel viewModel);
+        public Task UpdateAsync(UserBaseViewModel viewModel);
     }
 }

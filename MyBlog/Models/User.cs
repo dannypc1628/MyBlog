@@ -22,4 +22,8 @@ public partial class User
     public DateTime UpdateDate { get; set; }
 
     public int Role { get; set; }
+
+    public string Image { get; set; }
+
+    public string About { get; set; }
 }
