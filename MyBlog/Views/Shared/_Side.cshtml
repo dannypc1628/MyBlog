@@ -1,0 +1,29 @@
+﻿@using MyBlog.Services
+@inject IUserService userService;
+@inject IPostService postService;
+
+@{
+    var user = await userService.GetAsync(1);
+    var posts = postService.GetAll();
+}
+@if(user is not null)
+{
+<div class="row mt-3">
+   <div class="col-12">
+            <img src="@user.Image" class="img-thumbnail border-0" title="@user.Image" />
+   </div>
+    <p class="col-12 mt-2">@user.About</p>
+</div>   
+}
+<br />
+
+<h2 class="text-primary">近期文章</h2>
+@if(posts is not null){
+    <div class="list-group mb-3">
+        @foreach(var post in posts)
+        {
+            <a asp-action="Post" asp-route-path="@post.Path"
+            class="list-group-item list-group-item-action text-truncate border-primary">@post.Title</a>
+        }
+    </div>
+}

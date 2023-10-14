@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MyBlog.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="">
     <header>
         <nav class="navbar navbar-expand-lg bg-primary">
             <div class="container-fluid">
@@ -42,8 +42,8 @@
             <main role="main" class="col col-lg-9 pt-2 pb-2">
                 @RenderBody()
             </main>
-            <aside class="col col-lg-3">
-                側邊
+            <aside class="col col-lg-3 pt-2 pb-2">
+                @await Html.PartialAsync("_Side")
             </aside>
         </div>
     </div>
@@ -54,7 +54,7 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
