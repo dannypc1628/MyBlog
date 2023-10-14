@@ -17,12 +17,23 @@ namespace MyBlog.Services
         public List<Post> GetAll(int page = 1, int pageSize = 10)
         {
             var skipCount = (page - 1) * pageSize;
-            return _postRepository.Query(x => x.ParentId == 0)?.Skip(skipCount).Take(pageSize).ToList() ?? new List<Post>();
+            return _postRepository.Query(x => x.ParentId == 0 && x.Status==PostStatus.已發佈.ToString())
+                .OrderByDescending(x=>x.PublishDate)?.Skip(skipCount).Take(pageSize).ToList() ?? new List<Post>();
         }
 
         public async Task<Post?> GetAsync(int id)
         {
             return await _postRepository.GetAsync(x => x.Id == id);
+        }
+
+        public async Task<Post?> GetByPathAsync(string path)
+        {
+            return await _postRepository.GetAsync(x => x.Path == path && x.Status == PostStatus.已發佈.ToString());
+        }
+
+        public int Count()
+        {
+            return _postRepository.Query(x => x.Status == PostStatus.已發佈.ToString()).Count();
         }
 
         public async Task CreateAsync(Post post)

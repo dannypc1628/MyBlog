@@ -8,6 +8,10 @@ namespace MyBlog.Services
 
         Task<Post?> GetAsync(int id);
 
+        Task<Post?> GetByPathAsync(string path);
+
+        int Count();
+
         Task CreateAsync(Post post);
 
         Task UpdateAsync(Post post);

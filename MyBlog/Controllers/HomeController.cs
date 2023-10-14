@@ -3,8 +3,6 @@ using MyBlog.Models;
 using MyBlog.Services;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace MyBlog.Controllers
@@ -20,15 +18,22 @@ namespace MyBlog.Controllers
             _postService = postService;
         }
 
-        public IActionResult Index(int p = 1)
+        public async Task<IActionResult> Index(int p = 1)
         {
             var posts = _postService.GetAll(p, 10);
             return View(posts);
         }
 
-        public async Task<IActionResult> Post(int id)
+        [Route("{path}")]
+        public async Task<IActionResult> Post(string path)
         {
-            var post = await _postService.GetAsync(id);
+            var post = await _postService.GetByPathAsync(path);
+
+            if (post is null)
+            {
+                return NotFound();
+            }
+
             return View(post);
         }
 
