@@ -15,7 +15,9 @@ if (builder.Environment.IsDevelopment())
 }
 
 builder.Services.AddDbContext<MyBlogContext>(options =>
-              options.UseSqlServer(builder.Configuration.GetConnectionString("MyBlogConnection")));
+              //options.UseSqlServer(builder.Configuration.GetConnectionString("MyBlogConnection"))
+              options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection"))
+              );
 
 builder.Services.AddScoped<DbContext, MyBlogContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
