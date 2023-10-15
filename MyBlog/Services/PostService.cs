@@ -17,8 +17,8 @@ namespace MyBlog.Services
         public List<Post> GetAll(int page = 1, int pageSize = 10)
         {
             var skipCount = (page - 1) * pageSize;
-            return _postRepository.Query(x => x.ParentId == 0 && x.Status==PostStatus.已發佈.ToString())
-                .OrderByDescending(x=>x.PublishDate)?.Skip(skipCount).Take(pageSize).ToList() ?? new List<Post>();
+            return _postRepository.Query(x => x.ParentId == 0 && x.Status == PostStatus.已發佈.ToString())
+                .OrderByDescending(x => x.PublishDate)?.Skip(skipCount).Take(pageSize).ToList() ?? new List<Post>();
         }
 
         public async Task<Post?> GetAsync(int id)
